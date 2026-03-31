@@ -59,4 +59,18 @@ public class ReservationsController : ControllerBase
     var reservations = await _reservationService.GetByDateAsync(request.Date);
     return Ok(reservations);
   }
+
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> Delete(Guid id)
+  {
+
+    var isDeleted = await _reservationService.DeleteAsync(id);
+
+    if (!isDeleted)
+    {
+        return NotFound(); 
+    }
+
+    return NoContent(); 
+  }
 }

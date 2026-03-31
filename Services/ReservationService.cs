@@ -49,7 +49,7 @@ public class ReservationService : IReservationService
     return ReservationMapper.ToResponseList(reservations);
   }
 
-  public Task<bool> DeleteAsync(Guid id)
+  public async Task<bool> DeleteAsync(Guid id)
   {
      return await _reservationRepository.DeleteAsync(id);
   }
