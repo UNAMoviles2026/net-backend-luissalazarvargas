@@ -29,4 +29,9 @@ public static class ReservationMapper
       EndTime = reservation.EndTime
     };
   }
+
+  public static List<ReservationResponse> ToResponseList(List<Reservation> reservations)
+  {
+    return reservations.Select(ToResponse).ToList();
+  }
 }

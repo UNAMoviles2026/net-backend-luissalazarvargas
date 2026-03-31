@@ -42,4 +42,10 @@ public class ReservationService : IReservationService
     return existingReservations.Any(r =>
         startTime < r.EndTime && endTime > r.StartTime);
   }
+
+  public async Task<List<ReservationResponse>> GetByDateAsync(DateOnly date)
+  {
+    var reservations = await _reservationRepository.GetByDateAsync(date);
+    return ReservationMapper.ToResponseList(reservations);
+  }
 }
