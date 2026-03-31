@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using reservations_api.DTOs.Requests;
+using reservations_api.DTOs.Responses;
+using reservations_api.Mappers;
 using reservations_api.Services;
 
 namespace reservations_api.Controllers;
@@ -47,7 +49,7 @@ public class ReservationsController : ControllerBase
   }
 
   [HttpGet]
-  public async Task<IActionResult<List<ReservationResponse>>> GetByDate([FromQuery] GetReservationByDateRequest request)
+  public async Task<ActionResult<List<ReservationResponse>>> GetByDate([FromQuery] GetReservationByDateRequest request)
   {
 
     if (!ModelState.IsValid)
@@ -55,7 +57,6 @@ public class ReservationsController : ControllerBase
       return ValidationProblem(ModelState);
     }
     var reservations = await _reservationService.GetByDateAsync(request.Date);
-    var response = ReservationMapper.ToResponseList(reservations);
-    return Ok(response);
+    return Ok(reservations);
   }
 }
