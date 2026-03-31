@@ -45,4 +45,17 @@ public class ReservationsController : ControllerBase
       throw;
     }
   }
+
+  [HttpGet]
+  public async Task<IActionResult<List<ReservationResponse>>> GetByDate([FromQuery] GetReservationByDateRequest request)
+  {
+
+    if (!ModelState.IsValid)
+    {
+      return ValidationProblem(ModelState);
+    }
+    var reservations = await _reservationService.GetByDateAsync(request.Date);
+    var response = ReservationMapper.ToResponseList(reservations);
+    return Ok(response);
+  }
 }
